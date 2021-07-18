@@ -1,5 +1,7 @@
 """Restaurant rating lister."""
 
+import random
+
 def process_ratings():
     """Reads scores from file and resturns dictionary of {restaurant-name: score}."""
 
@@ -43,9 +45,28 @@ def get_action_choice():
     print("What would you like to do?")
     print("1. See ratings for all restaurants")
     print("2. Add a new restauarnt and rating")
-    print("3. Quit")
+    print("3. Update a random restaurant's rating")
+    print("4. Quit")
 
     return int(input("> "))
+
+def update_restaurant_rating(ratings):
+    """Chooce a restaurant at random and allow user to update its rating."""
+
+
+    restaurant_list = list(ratings.keys())
+    restaurant = random.choice(restaurant_list)
+    print(f"The random restaurant chosen is {restaurant}.")
+    new_rating = (input(f"What new rating would you like to give {restaurant}? "))
+
+    while new_rating.isdigit() == False:
+        print("You must enter a number for the rating.")
+        new_rating = (input(f"What new rating would you like to give {restaurant}? "))
+
+    #update restaurant rating with the new rating
+    ratings[restaurant] = new_rating
+
+    print_sorted_ratings(ratings)
 
 
 #read existing scores in from file
@@ -60,10 +81,13 @@ while True:
     if action == 1:
         print_sorted_ratings(ratings)
 
-    elif action ==2:
+    elif action == 2:
         add_new_restaurant(ratings)
 
-    elif action ==3:
+    elif action == 3:
+        update_restaurant_rating(ratings)
+
+    elif action == 4:
         print("Thank you and goodbye!")
         break
 
