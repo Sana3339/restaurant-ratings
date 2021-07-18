@@ -46,13 +46,13 @@ def get_action_choice():
     print("1. See ratings for all restaurants")
     print("2. Add a new restauarnt and rating")
     print("3. Update a random restaurant's rating")
-    print("4. Quit")
+    print("4. Update a specific restaurant's rating")
+    print("5. Quit")
 
     return int(input("> "))
 
-def update_restaurant_rating(ratings):
+def update_random_rating(ratings):
     """Chooce a restaurant at random and allow user to update its rating."""
-
 
     restaurant_list = list(ratings.keys())
     restaurant = random.choice(restaurant_list)
@@ -64,6 +64,22 @@ def update_restaurant_rating(ratings):
         new_rating = (input(f"What new rating would you like to give {restaurant}? "))
 
     #update restaurant rating with the new rating
+    ratings[restaurant] = new_rating
+
+    print_sorted_ratings(ratings)
+
+
+def update_specific_restaurant_rating(ratings):
+    """Ask user to choose a specific restaurant and to provide an updated rating."""
+
+    restaurant = input("Which restaurant's rating would you like to update? ")
+
+    if restaurant not in ratings:
+        print("Restaurant is not in list of ratings. Please add restaurant to rate it.")
+        return
+
+    new_rating = input("What is the new rating you would like to give the restaurant? ")
+
     ratings[restaurant] = new_rating
 
     print_sorted_ratings(ratings)
@@ -85,9 +101,12 @@ while True:
         add_new_restaurant(ratings)
 
     elif action == 3:
-        update_restaurant_rating(ratings)
+        update_random_rating(ratings)
 
     elif action == 4:
+        update_specific_restaurant_rating(ratings)
+
+    elif action == 5:
         print("Thank you and goodbye!")
         break
 
